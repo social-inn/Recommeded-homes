@@ -1,2 +1,2 @@
-# Airbnb_more_homes
-module: More homes you may like
+# Social-Inn Recommended Homes
+Module for recommending similar homes on housing reservation website
