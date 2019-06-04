@@ -10,6 +10,7 @@ Module for recommending similar homes on housing reservation website
 
 ## GET
 **Endpoint:** `/MoreHomes`
+
 **Success Response:** 12 random homes data in array format
 - **Code:** 200
 - **Content:**
@@ -34,6 +35,7 @@ Module for recommending similar homes on housing reservation website
 <br />
 
 **Endpoint:** `/MoreHomes/:id`
+
 **Success Response:** The home with param`id`in object format
 - **Code:** 200
 - **Content:**
@@ -55,6 +57,7 @@ Module for recommending similar homes on housing reservation website
 
 ## POST
 **Endpoint:** `/MoreHomes`
+
 **Data Params:** Body should be in JSON format
 ```
 	{
@@ -77,6 +80,7 @@ Module for recommending similar homes on housing reservation website
 
 ## PUT
 **Endpoint:** `/MoreHomes/:id`
+
 **Data Params:** Body should be in JSON format with updated info
 ```
 	{
@@ -99,6 +103,7 @@ Module for recommending similar homes on housing reservation website
 
 ## DELETE
 **Endpoint:** `/MoreHomes/:id`
+
 **Success Response:** Deletes the home with id = `id`
 - **Code:** 204
 - **Content:** None
