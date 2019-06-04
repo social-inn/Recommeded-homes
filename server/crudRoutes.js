@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, '../public/dist')));
 app.get('/MoreHomes', (req, res) => {
   dbModels.getAll((err, data) => {
     if (err) {
-      res.status(500).send();
+      res.status(500).send('error');
     } else {
       res.status(200).send(data);
     }
@@ -24,7 +24,7 @@ app.get('/MoreHomes', (req, res) => {
 app.get('/MoreHomes/:id', (req, res) => {
   dbModels.getById(req.params.id, (err, data) => {
     if (err) {
-      res.status(500).send();
+      res.status(500).send('error');
     } else {
       res.status(200).send(data);
     }
@@ -35,9 +35,9 @@ app.get('/MoreHomes/:id', (req, res) => {
 app.post('/MoreHomes', (req, res) => {
   dbModels.addHome(req.body, (err) => {
     if (err) {
-      res.status(500).send();
+      res.status(500).send('error');
     } else {
-      res.status(200).send();
+      res.status(201).send();
     }
   });
 });
@@ -46,9 +46,9 @@ app.post('/MoreHomes', (req, res) => {
 app.put('/MoreHomes/:id', (req, res) => {
   dbModels.updateHome(req.params.id, req.body, (err) => {
     if (err) {
-      res.status(500).send();
+      res.status(500).send('error');
     } else {
-      res.status(200).send();
+      res.status(204).send();
     }
   });
 });
@@ -57,9 +57,9 @@ app.put('/MoreHomes/:id', (req, res) => {
 app.delete('/MoreHomes/:id', (req, res) => {
   dbModels.deleteHome(req.params.id, (err) => {
     if (err) {
-      res.status(500).send();
+      res.status(500).send('error');
     } else {
-      res.status(200).send();
+      res.status(204).send();
     }
   });
 });
