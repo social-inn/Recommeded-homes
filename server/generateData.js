@@ -1,8 +1,7 @@
-/* eslint-disable no-console */
 const faker = require('faker');
+
 const img = require('./images.js');
-// const img = require('./localimg.js');
-const dbModels = require('../db/models.js');
+const dbModels = require('../db/crudOperations');
 const dbConnection = require('../db/conn.js');
 
 function create() {
@@ -28,7 +27,7 @@ function create() {
 }
 
 const data = create();
-dbModels.addHouse(dbConnection, data, (err) => {
+dbModels.addHouse(data, (err) => {
   if (err) {
     console.log(err);
   } else {
