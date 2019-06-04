@@ -1,7 +1,7 @@
-### Social-Inn Recommended Homes
+# Social-Inn Recommended Homes
 Module for recommending similar homes on housing reservation website
 
-### RESTful API Routes
+## RESTful API Routes
 
 1. [GET](#GET)
 1. [POST](#POST)
