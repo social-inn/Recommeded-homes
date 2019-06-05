@@ -11,7 +11,7 @@ Module for recommending similar homes on housing reservation website
 ## GET
 **Endpoint:** `/MoreHomes`
 
-**Success Response:** 12 random homes data in array format
+**Success Response:** recommended homes data in array format
 - **Code:** 200
 - **Content:**
 ```
