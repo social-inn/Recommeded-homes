@@ -75,10 +75,10 @@ Module for recommending similar homes on housing reservation website
 - **Content:** `'error'`
 
 ## DELETE
-**Endpoint:** `/MoreHomes/:id`
+**Endpoint:** `/MoreHomes/:id?recommendedId=` <br >
 **Query Params:** recommendedId is id of recommendation home
 
-**Success Response:** Deletes the recommendation with id = `query.id` for home with id = `id`
+**Success Response:** Deletes the recommendation with id = `query.recommendedId` for home with id = `id`
 - **Code:** 204
 - **Content:** None
 
