@@ -9,22 +9,21 @@ Module for recommending similar homes on housing reservation website
 1. [DELETE](#DELETE)
 
 ## GET
-**Endpoint:** `/MoreHomes`
+**Endpoint:** `/MoreHomes/:id`
 
-**Success Response:** 12 random homes data in array format
+**Success Response:** List of recommended homes with id = `id` in array format
 - **Code:** 200
 - **Content:**
 ```
 	[
 		{
-		  id : 12,
-		  img: "https://s3-us-west-1.amazonaws.com/homes-pic/4.jpg",
-		  house_type: "ENTIRE HOUSE",
-		  location: "Lake Tobinvilla",
-		  description: "Cozy house in friendly neighborhood",
-		  cost_per_night: 6795,
-		  rating: 4.1,
-		  votes: 1973 
+		  id : 12
+		},
+		{
+		  id : 183
+		},
+		{
+		  id : 5783
 		}, ...
 	]
 ```
@@ -32,45 +31,17 @@ Module for recommending similar homes on housing reservation website
 **Error Response:**
 - **Code:** 500
 - **Content:** `'error'`
-<br />
-
-**Endpoint:** `/MoreHomes/:id`
-
-**Success Response:** The home with param`id`in object format
-- **Code:** 200
-- **Content:**
-```
-	{
-	id : 12,
-	img: "https://s3-us-west-1.amazonaws.com/homes-pic/4.jpg",
-	house_type: "ENTIRE HOUSE",
-	location: "Lake Tobinvilla",
-	description: "Cozy house in friendly neighborhood",
-	cost_per_night: 6795,
-	rating: 4.1,
-	votes: 1973 
-	}
-```
-**Error Response:**
-- **Code:** 500
-- **Content:** `'error'`
 
 ## POST
-**Endpoint:** `/MoreHomes`
+**Endpoint:** `/MoreHomes/:id`
 
 **Data Params:** Body should be in JSON format
 ```
 	{
-	img: "https://s3-us-west-1.amazonaws.com/homes-pic/4.jpg",
-	house_type: "ENTIRE HOUSE",
-	location: "Lake Tobinvilla",
-	description: "Cozy house in friendly neighborhood",
-	cost_per_night: 6795,
-	rating: 4.1,
-	votes: 1973
+	id: 603
 	}
 ```
-**Success Response:** Inserts new home in table
+**Success Response:** Inserts new recommendation for home with id = `id`
 - **Code:** 201
 - **Content:** None
 
@@ -81,19 +52,21 @@ Module for recommending similar homes on housing reservation website
 ## PUT
 **Endpoint:** `/MoreHomes/:id`
 
-**Data Params:** Body should be in JSON format with updated info
+**Data Params:** Body should be an array of ids in JSON format with updated recommendations
 ```
-	{
-	img: "https://s3-us-west-1.amazonaws.com/homes-pic/4.jpg",
-	house_type: "ENTIRE HOUSE",
-	location: "Lake Tobinvilla",
-	description: "Cozy house in friendly neighborhood",
-	cost_per_night: 6795,
-	rating: 4.1,
-	votes: 1973
-	}
+	[
+		{
+		  id : 25
+		},
+		{
+		  id : 98074
+		},
+		{
+		  id : 1334
+		}
+	]
 ```
-**Success Response:** Updates the home with id = `id`
+**Success Response:** Updates the recommendations of home with id = `id`
 - **Code:** 204
 - **Content:** None
 
@@ -102,9 +75,10 @@ Module for recommending similar homes on housing reservation website
 - **Content:** `'error'`
 
 ## DELETE
-**Endpoint:** `/MoreHomes/:id`
+**Endpoint:** `/MoreHomes/:id?recommendedId=` <br >
+**Query Params:** recommendedId is id of recommendation home
 
-**Success Response:** Deletes the home with id = `id`
+**Success Response:** Deletes the recommendation with id = `query.recommendedId` for home with id = `id`
 - **Code:** 204
 - **Content:** None
 
