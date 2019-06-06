@@ -36,6 +36,9 @@ bower_components/
 .floo
 .flooignore
 
+# CSV files
+db/csvFiles
+
 
 db/config.js
 package-lock.json
