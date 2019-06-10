@@ -33,31 +33,31 @@ const image = [
   'https://s3-us-west-1.amazonaws.com/homes-pic/24.jpg'
 ];
 const description = ['Cozy house in friendly neighborhood', 'Spacious apartment', 'Sunny and Modern room', 'Penthouse Studio', 'Perfect Weekender', 'Sanson Terrace "off-grid tiny cottage"',
-  'Sakura River Inn 2 (licenced Machiya)', 'J\'s APT 2 Bed Rooms + Free Portable Wi-Fi', '2 Bed Room + 2 Toilets + Free Pocket Wi-Fi', 'Traditional Japanese-style Twin Room', 'New House 1 minute from station'];
+  'Sakura River Inn 2 (licensed Machiya)', 'J\'s APT 2 Bed Rooms + Free Portable Wi-Fi', '2 Bed Room + 2 Toilets + Free Pocket Wi-Fi', 'Traditional Japanese-style Twin Room', 'New House 1 minute from station'];
 const houseType = ['ENTIRE HOUSE', 'ENTIRE APARTMENT', 'PRIVATE ROOM', 'SHARED ROOM'];
 const city = ['Tokyo', 'Yokohama', 'Osaka', 'Nagoya', 'Sapporo', 'Kobe', 'Kyoto', 'Nara', 'Kanagawa', 'Okinawa'];
 
 /*
-
 ******* Data structure should look like *******
  {
+  id: i
   image: image[Math.floor(Math.random() * image.length)],
-  homedescription: description[Math.floor(Math.random() * description.length)],
+  description: description[Math.floor(Math.random() * description.length)],
   houseType: houseType[Math.floor(Math.random() * houseType.length)],
   city: city[Math.floor(Math.random() * city.length)],
   price: `$${Math.floor(Math.random() * 500).toFixed(2)}`,
   stars: Math.floor(Math.random() * 11) / 2,
   num_reviews: Math.floor(Math.random() * 500)
 };
-
 */
 
 // Generate homes data
-/*
-console.log('Start generating Homes data:', new Date().toISOString());
+
+console.log('Start generating Neo4j Homes data:', new Date().toISOString());
 
 const createData = function (i) {
   const structureArr = [
+    i,
     image[Math.floor(Math.random() * image.length)],
     description[Math.floor(Math.random() * description.length)] + i,
     houseType[Math.floor(Math.random() * houseType.length)],
@@ -69,11 +69,10 @@ const createData = function (i) {
   return `${structureArr.join(',')}\n`;
 };
 
-const stream = fs.createWriteStream('db/csvFiles/dataHomesPostgres.csv', { flags: 'a' });
+const stream = fs.createWriteStream('db/csvFiles/dataHomesNeo4j.csv', { flags: 'a' });
 const start = 0;
-const end = 1e7;
-// const end = 99;
-
+// const end = 100000;
+// const end = 1e7;
 
 function writeManyTimes(writer, callback) {
   let i = start;
@@ -99,17 +98,16 @@ function writeManyTimes(writer, callback) {
 
 writeManyTimes(stream, () => {
   stream.end();
-  console.log('Finish generating Homes data:', new Date().toISOString());
+  console.log('Finish generating Neo4j Homes data:', new Date().toISOString());
 });
-*/
 
 const createRecommendations = function (id) {
-  const numberOfRecommendations = 6;
+  const numberOfRecommendations = 12;
 
   let reccs = '';
 
   for (let i = 0; i < numberOfRecommendations; i++) {
-    let rand = Math.floor(Math.random() * 1e7) + 1;
+    let rand = Math.floor(Math.random() * 100000) + 1;
     if (rand === id) rand++;
     reccs += `${id},${rand}\n`;
   }
@@ -117,10 +115,10 @@ const createRecommendations = function (id) {
   return reccs;
 };
 
-const streamR = fs.createWriteStream('db/csvFiles/dataRecommendations.csv', { flags: 'a' });
+const streamR = fs.createWriteStream('db/csvFiles/sampledataRecommendationsNeo4j.csv', { flags: 'a' });
 const startR = 0;
-const endR = 1e7;
-// const end = 99;
+// const endR = 1e7;
+// const endR = 100000;
 
 console.log('Start generating Recommendations data:', new Date().toISOString());
 

@@ -1,13 +1,19 @@
-// Get all homes
+const pgConnection = require('./index');
+
+// Get 12 random homes
 const getAll = (connection, callback) => {
-  const query = 'SELECT * FROM homes ORDER BY RAND() LIMIT 12';
-  connection.query(query, (err, result) => {
-    if (err) {
-      callback(err);
-    } else {
-      callback(null, result);
-    }
+  const query = 'SELECT * FROM homes ORDER BY RANDOM() LIMIT 12;';
+  pgConnection.pool.query(query, (err, res) => {
+    console.log(err, res);
   });
+
+  // connection.query(query, (err, result) => {
+  //   if (err) {
+  //     callback(err);
+  //   } else {
+  //     callback(null, result);
+  //   }
+  // });
 };
 
 const addHouse = (connection, arr, callback) => {

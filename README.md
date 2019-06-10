@@ -39,7 +39,7 @@ Module for recommending similar homes on housing reservation website
 **Data Params:** Body should be in JSON format
 ```
 	{
-	id: 603
+	 id: 603
 	}
 ```
 **Success Response:** Inserts new recommendation for home with id = `id`

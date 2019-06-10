@@ -15,25 +15,28 @@ app.get('/MoreHomes', (req, res) => {
     if (err) {
       res.status(500).send('error');
     } else {
-      res.status(200).send(data);
+      res.status(200).send(data.rows);
     }
   });
 });
 
-// Get home by id
+// Get recommended homes for home with id
 app.get('/MoreHomes/:id', (req, res) => {
   dbModels.getById(req.params.id, (err, data) => {
     if (err) {
       res.status(500).send('error');
     } else {
-      res.status(200).send(data);
+      res.status(200).send(data.rows);
     }
   });
 });
 
 // Post a new home
-app.post('/MoreHomes', (req, res) => {
-  dbModels.addHome(req.body, (err) => {
+app.post('/MoreHomes/:id', (req, res) => {
+  const data = [parseInt(req.params.id, 10), req.body.id];
+  console.log(data);
+
+  dbModels.addHome(data, (err) => {
     if (err) {
       res.status(500).send('error');
     } else {
@@ -42,27 +45,27 @@ app.post('/MoreHomes', (req, res) => {
   });
 });
 
-// Update a home by id
-app.put('/MoreHomes/:id', (req, res) => {
-  dbModels.updateHome(req.params.id, req.body, (err) => {
-    if (err) {
-      res.status(500).send('error');
-    } else {
-      res.status(204).send();
-    }
-  });
-});
+// // Update a home by id
+// app.put('/MoreHomes/:id', (req, res) => {
+//   dbModels.updateHome(req.params.id, req.body, (err) => {
+//     if (err) {
+//       res.status(500).send('error');
+//     } else {
+//       res.status(204).send();
+//     }
+//   });
+// });
 
-// Delete a home by id
-app.delete('/MoreHomes/:id', (req, res) => {
-  dbModels.deleteHome(req.params.id, (err) => {
-    if (err) {
-      res.status(500).send('error');
-    } else {
-      res.status(204).send();
-    }
-  });
-});
+// // Delete a home by id
+// app.delete('/MoreHomes/:id', (req, res) => {
+//   dbModels.deleteHome(req.params.id, (err) => {
+//     if (err) {
+//       res.status(500).send('error');
+//     } else {
+//       res.status(204).send();
+//     }
+//   });
+// });
 
 app.get('/*', (req, res) => {
   res.sendStatus(200);
