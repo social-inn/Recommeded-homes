@@ -11,19 +11,20 @@ Module for recommending similar homes on housing reservation website
 ## GET
 **Endpoint:** `/MoreHomes/:id`
 
-**Success Response:** List of recommended homes with id = `id` in array format
+**Success Response:** List of recommended homes for id = `id` in an array of objects
 - **Code:** 200
 - **Content:**
 ```
 	[
 		{
-		  id : 12
-		},
-		{
-		  id : 183
-		},
-		{
-		  id : 5783
+		  id : 12,
+		  image_url : 'https://s3-us-west-1.amazonaws.com/homes-pic/4.jpg',
+		  home_description : 'New House 1 minute from station622012',
+		  house_type : 'ENTIRE HOUSE',
+		  city : 'Yokohama',
+		  price : '$312.00',
+		  stars : 2.50,
+		  num_reviews : 325
 		}, ...
 	]
 ```
@@ -78,7 +79,7 @@ Module for recommending similar homes on housing reservation website
 **Endpoint:** `/MoreHomes/:id?recommendedId=` <br >
 **Query Params:** recommendedId is id of recommendation home
 
-**Success Response:** Deletes the recommendation with id = `query.recommendedId` for home with id = `id`
+**Success Response:** Deletes the recommendation with id = `req.query.recommendedId` for home with id = `id`
 - **Code:** 204
 - **Content:** None
 
