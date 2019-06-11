@@ -39,7 +39,7 @@ Module for recommending similar homes on housing reservation website
 **Data Params:** Body should be in JSON format
 ```
 	{
-	id: 603
+	 id: 603
 	}
 ```
 **Success Response:** Inserts new recommendation for home with id = `id`
@@ -77,7 +77,13 @@ Module for recommending similar homes on housing reservation website
 
 ## DELETE
 **Endpoint:** `/MoreHomes/:id?recommendedId=` <br >
-**Query Params:** recommendedId is id of recommendation home
+**Query Params:** recommendedId is id of home
+**Data Params:** Body should be in JSON format with the id of recommendation to delete
+```
+	{
+	 id: 603
+	}
+```
 
 **Success Response:** Deletes the recommendation with id = `req.query.recommendedId` for home with id = `id`
 - **Code:** 204
