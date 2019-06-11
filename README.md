@@ -77,7 +77,7 @@ Module for recommending similar homes on housing reservation website
 
 ## DELETE
 **Endpoint:** `/MoreHomes/:id?recommendedId=` <br >
-**Query Params:** recommendedId is id of home
+**Query Params:** recommendedId is id of home <br >
 **Data Params:** Body should be in JSON format with the id of recommendation to delete
 ```
 	{
