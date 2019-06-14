@@ -43,3 +43,5 @@ db/csvFiles
 db/config.js
 package-lock.json
 .DS_Store
+
+newrelic.js

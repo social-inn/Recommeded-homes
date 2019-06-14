@@ -26,7 +26,8 @@ class MoreHomes extends React.Component {
     window.addEventListener("resize", this.handleResize);
     const search = window.location.search;
     const params = new URLSearchParams(search);
-    axios.get(`/MoreHomes?id=${params.get('roomid')}`)
+    axios.get(`/rooms/${params.get('id')}`)
+    // axios.get(`/rooms/${Math.ceil(Math.random() * 10000000)}`)
       .then((response) => {
         this.setState({ data: response.data })
       })

@@ -1,3 +1,5 @@
+/* eslint-disable prefer-arrow-callback */
+require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -10,7 +12,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../public/dist')));
 
 // Get all homes
-app.get('/MoreHomes', (req, res) => {
+app.get('/rooms', (req, res) => {
   dbModels.getAll((err, data) => {
     if (err) {
       res.status(500).send('error');
@@ -21,8 +23,8 @@ app.get('/MoreHomes', (req, res) => {
 });
 
 // Get recommended homes for home with id
-app.get('/MoreHomes/:id', (req, res) => {
-  dbModels.getById(req.params.id, (err, data) => {
+app.get('/rooms/:id', function getRoomsServer(req, res) {
+  dbModels.getById(req.params.id, function getRoomsDb(err, data) {
     if (err) {
       res.status(500).send('error');
     } else {
@@ -32,9 +34,8 @@ app.get('/MoreHomes/:id', (req, res) => {
 });
 
 // Post a new home
-app.post('/MoreHomes/:id', (req, res) => {
+app.post('/rooms/:id', (req, res) => {
   const data = [parseInt(req.params.id, 10), req.body.id];
-  console.log(data);
 
   dbModels.addHome(data, (err) => {
     if (err) {
@@ -45,27 +46,27 @@ app.post('/MoreHomes/:id', (req, res) => {
   });
 });
 
-// // Update a home by id
-// app.put('/MoreHomes/:id', (req, res) => {
-//   dbModels.updateHome(req.params.id, req.body, (err) => {
-//     if (err) {
-//       res.status(500).send('error');
-//     } else {
-//       res.status(204).send();
-//     }
-//   });
-// });
+// Update a home by id
+app.put('/rooms/:id', (req, res) => {
+  dbModels.updateHome(req.params.id, req.body.map(x => x.id), (err) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(204).send();
+    }
+  });
+});
 
-// // Delete a home by id
-// app.delete('/MoreHomes/:id', (req, res) => {
-//   dbModels.deleteHome(req.params.id, (err) => {
-//     if (err) {
-//       res.status(500).send('error');
-//     } else {
-//       res.status(204).send();
-//     }
-//   });
-// });
+// Delete a home by id
+app.delete('/rooms/:id', (req, res) => {
+  dbModels.deleteHome(parseInt(req.params.id, 10), req.body.id, (err) => {
+    if (err) {
+      res.status(500).send('error');
+    } else {
+      res.status(204).send();
+    }
+  });
+});
 
 app.get('/*', (req, res) => {
   res.sendStatus(200);

@@ -1,5 +1,16 @@
+/* eslint-disable prefer-arrow-callback */
 // const connection = require('./conn.js');
-const pgConnection = require('./index.js');
+
+const { Pool } = require('pg');
+
+const pgConnection = new Pool({
+  host: 'localhost',
+  database: 'recommended_homes',
+  user: 'bill',
+  port: 5432
+});
+
+// const pgConnection = require('./index.js');
 
 // Get 12 random homes
 const getAll = (callback) => {
@@ -15,19 +26,8 @@ const getAll = (callback) => {
 
 // Get home by id
 const getById = (id, callback) => {
-  const query = `SELECT recommended.recommendation_id FROM homes INNER JOIN recommended ON homes.id = $1 AND recommended.home_id = $1;`;
-  pgConnection.pool.query(query, [id], (err, result) => {
-    if (err) {
-      callback(err);
-    } else {
-      getRecommendations(result.rows, callback);
-    }
-  });
-};
-
-const getRecommendations = (arr, callback) => {
-  const query = `SELECT * FROM homes WHERE id IN ($1, $2, $3, $4, $5, $6);`;
-  pgConnection.pool.query(query, arr.map(x => x.recommendation_id), (err, result) => {
+  const query = 'WITH x AS (SELECT recommendation_id FROM recommended WHERE recommended.home_id=$1) SELECT * FROM x INNER JOIN homes ON homes.id=x.recommendation_id;';
+  pgConnection.query(query, [id], function accessDB(err, result) {
     if (err) {
       callback(err);
     } else {
@@ -50,9 +50,22 @@ const addHome = (data, callback) => {
 
 // Put home by id
 const updateHome = (id, data, callback) => {
-  // const query = 'UPDATE homes SET img=?, house_type=?, location=?, description=?, cost_per_night=?, rating=?, votes=? WHERE id=?';
-  const query = 'UPDATE homes SET ? WHERE id =' + id;
-  pgConnection.pool.query(query, data, (err) => {
+  const query = 'DELETE FROM recommended WHERE home_id = $1';
+
+  pgConnection.pool.query(query, [id], (err) => {
+    if (err) {
+      callback(err);
+    } else {
+      insertHomes(id, data, callback);
+    }
+  });
+};
+
+const insertHomes = (id, data, callback) => {
+  const intId = parseInt(id, 10);
+  const query = `INSERT INTO recommended (home_id, recommendation_id) (SELECT * FROM unnest(ARRAY[${new Array(data.length).fill(intId)}], ARRAY[${data}]));`;
+
+  pgConnection.pool.query(query, (err) => {
     if (err) {
       callback(err);
     } else {
@@ -62,17 +75,16 @@ const updateHome = (id, data, callback) => {
 };
 
 // Delete home by id
-const deleteHome = (id, callback) => {
-  const query = 'DELETE FROM homes WHERE id = ?';
-  const q = pgConnection.pool.query(query, id, (err, results, fields) => {
+const deleteHome = (homeId, recommendationId, callback) => {
+  const query = 'DELETE FROM recommended WHERE home_id = $1 AND recommendation_id = $2';
+  pgConnection.pool.query(query, [homeId, recommendationId], (err, results) => {
     if (err) {
       callback(err);
     } else {
-      console.log('deleted ' + results.affectedRows + ' rows');
+      // console.log(results.rowCount, 'rows deleted');
       callback(null);
     }
   });
-  // console.log(q.sql)
 };
 
 /* For mysql connection
