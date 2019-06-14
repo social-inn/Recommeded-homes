@@ -53,7 +53,7 @@ const city = ['Tokyo', 'Yokohama', 'Osaka', 'Nagoya', 'Sapporo', 'Kobe', 'Kyoto'
 */
 
 // Generate homes data
-/*
+
 console.log('Start generating Homes data:', new Date().toISOString());
 
 const createData = function (i) {
@@ -101,7 +101,6 @@ writeManyTimes(stream, () => {
   stream.end();
   console.log('Finish generating Homes data:', new Date().toISOString());
 });
-*/
 
 const createRecommendations = function (id) {
   const numberOfRecommendations = 6;
