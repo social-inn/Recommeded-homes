@@ -1,16 +1,6 @@
 /* eslint-disable prefer-arrow-callback */
 // const connection = require('./conn.js');
-
-const { Pool } = require('pg');
-
-const pgConnection = new Pool({
-  host: 'localhost',
-  database: 'recommended_homes',
-  user: 'bill',
-  port: 5432
-});
-
-// const pgConnection = require('./index.js');
+const pgConnection = require('./index.js');
 
 // Get 12 random homes
 const getAll = (callback) => {
@@ -27,7 +17,7 @@ const getAll = (callback) => {
 // Get home by id
 const getById = (id, callback) => {
   const query = 'WITH x AS (SELECT recommendation_id FROM recommended WHERE recommended.home_id=$1) SELECT * FROM x INNER JOIN homes ON homes.id=x.recommendation_id;';
-  pgConnection.query(query, [id], function accessDB(err, result) {
+  pgConnection.pool.query(query, [id], function accessDB(err, result) {
     if (err) {
       callback(err);
     } else {

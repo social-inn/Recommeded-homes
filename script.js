@@ -8,7 +8,7 @@ export let options = {
 };
 
 export default function() {
-  let res = http.get('http://localhost:3883/rooms/' + Math.ceil(Math.random() * 10000000));
+  let res = http.get('http://127.0.0.1:3883/rooms/' + Math.ceil(Math.random() * 10000000));
   check(res, {
     'status was 200': (r) => r.status == 200,
   });
