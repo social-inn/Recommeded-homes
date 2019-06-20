@@ -7,3 +7,7 @@ exports.pool = new Pool({
   password: 'new_password',
   port: 5432
 });
+
+exports.pool.query('SELECT NOW()', (err, res) => {
+  console.log(err, res);
+});
